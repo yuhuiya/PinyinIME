@@ -16,8 +16,12 @@
 
 package com.android.inputmethod.pinyin;
 
-import java.util.List;
-
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -25,10 +29,11 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import com.android.inputmethod.pinyin.Settings;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+
+import java.util.List;
 
 /**
  * Setting activity of Pinyin IME.
@@ -41,7 +46,9 @@ public class SettingsActivity extends PreferenceActivity implements
     private CheckBoxPreference mKeySoundPref;
     private CheckBoxPreference mVibratePref;
     private CheckBoxPreference mPredictionPref;
-    
+    private PreferenceScreen mKeyboardUsePref;
+    private AlertDialog mOptionsDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +62,7 @@ public class SettingsActivity extends PreferenceActivity implements
                 .findPreference(getString(R.string.setting_vibrate_key));
         mPredictionPref = (CheckBoxPreference) prefSet
                 .findPreference(getString(R.string.setting_prediction_key));
-        
+        mKeyboardUsePref = (PreferenceScreen)prefSet.findPreference(getString(R.string.setting_keyboard_use));
         prefSet.setOnPreferenceChangeListener(this);
         
         Settings.getInstance(PreferenceManager
@@ -64,6 +71,13 @@ public class SettingsActivity extends PreferenceActivity implements
         updatePreference(prefSet, getString(R.string.setting_advanced_key));
         
         updateWidgets();
+        mKeyboardUsePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                showOptionsMenu();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -88,6 +102,47 @@ public class SettingsActivity extends PreferenceActivity implements
         Settings.writeBack();
     }
 
+    public void showOptionsMenu() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setIcon(R.drawable.app_icon);
+        builder.setNegativeButton(android.R.string.cancel, null);
+        CharSequence itemSettings = getString(R.string.ime_settings_activity_name);
+        CharSequence itemInputMethod = getString(R.string.ime_name);
+        builder.setItems(new CharSequence[] {itemSettings, itemInputMethod},
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface di, int position) {
+                        di.dismiss();
+                        switch (position) {
+                            case 0:
+                                launchSettings();
+                                break;
+                            case 1:
+                                InputMethodManager inputMethodMgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                inputMethodMgr.showInputMethodPicker();
+                                break;
+                        }
+                    }
+                });
+        builder.setTitle(getString(R.string.ime_name));
+        mOptionsDialog = builder.create();
+        Window window = mOptionsDialog.getWindow();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+        window.setAttributes(lp);
+        window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        mOptionsDialog.show();
+    }
+
+    private void launchSettings() {
+        Intent intent = new Intent();
+        intent.setClass(this, SettingsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         return true;
     }
@@ -108,8 +163,9 @@ public class SettingsActivity extends PreferenceActivity implements
             PackageManager pm = getPackageManager();
             List<ResolveInfo> list = pm.queryIntentActivities(intent, 0);
             int listSize = list.size();
-            if (listSize == 0)
+            if (listSize == 0) {
                 parentPref.removePreference(preference);
+            }
         }
     }
 }

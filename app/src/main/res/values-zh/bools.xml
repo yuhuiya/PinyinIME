@@ -14,5 +14,4 @@
      limitations under the License.
 -->
 <resources>
-  <bool name="im_is_default">true</bool>
 </resources>

@@ -21,7 +21,7 @@ import android.content.res.Resources;
 import android.inputmethodservice.InputMethodService;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.os.SystemProperties;
+//import android.os.SystemProperties;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -177,20 +177,21 @@ public class SkbContainer extends RelativeLayout implements OnTouchListener {
      * For temporary use.
      */
     private int mXyPosTmp[] = new int[2];
+    private Context mContext;
 
     public SkbContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
-
+        this.mContext = context;
         mEnvironment = Environment.getInstance();
 
         mLongPressTimer = new LongPressTimer(this);
 
         // If it runs on an emulator, no bias correction
-        if ("1".equals(SystemProperties.get("ro.kernel.qemu"))) {
-            mYBiasCorrection = 0;
-        } else {
+//        if ("1".equals(SystemProperties.get("ro.kernel.qemu"))) {
+//            mYBiasCorrection = 0;
+//        } else {
             mYBiasCorrection = Y_BIAS_CORRECTION;
-        }
+//        }
         mBalloonPopup = new BalloonHint(context, this, MeasureSpec.AT_MOST);
         if (POPUPWINDOW_FOR_PRESSED_UI) {
             mBalloonOnKey = new BalloonHint(context, this, MeasureSpec.AT_MOST);
@@ -214,7 +215,9 @@ public class SkbContainer extends RelativeLayout implements OnTouchListener {
     }
 
     public boolean isCurrentSkbSticky() {
-        if (null == mMajorView) return true;
+        if (null == mMajorView) {
+            return true;
+        }
         SoftKeyboard skb = mMajorView.getSoftKeyboard();
         if (null != skb) {
             return skb.getStickyFlag();
@@ -224,11 +227,15 @@ public class SkbContainer extends RelativeLayout implements OnTouchListener {
 
     public void toggleCandidateMode(boolean candidatesShowing) {
         if (null == mMajorView || !mInputModeSwitcher.isChineseText()
-                || mLastCandidatesShowing == candidatesShowing) return;
+                || mLastCandidatesShowing == candidatesShowing) {
+            return;
+        }
         mLastCandidatesShowing = candidatesShowing;
 
         SoftKeyboard skb = mMajorView.getSoftKeyboard();
-        if (null == skb) return;
+        if (null == skb) {
+            return;
+        }
 
         int state = mInputModeSwitcher.getTooggleStateForCnCand();
         if (!candidatesShowing) {
@@ -250,10 +257,14 @@ public class SkbContainer extends RelativeLayout implements OnTouchListener {
 
         mLastCandidatesShowing = false;
 
-        if (null == mMajorView) return;
+        if (null == mMajorView) {
+            return;
+        }
 
         SoftKeyboard skb = mMajorView.getSoftKeyboard();
-        if (null == skb) return;
+        if (null == skb) {
+            return;
+        }
         skb.enableToggleStates(mInputModeSwitcher.getToggleStates());
         invalidate();
         return;
@@ -309,7 +320,9 @@ public class SkbContainer extends RelativeLayout implements OnTouchListener {
     }
 
     private void responseKeyEvent(SoftKey sKey) {
-        if (null == sKey) return;
+        if (null == sKey) {
+            return;
+        }
         ((PinyinIME) mService).responseSoftKeyEvent(sKey);
         return;
     }
@@ -342,14 +355,16 @@ public class SkbContainer extends RelativeLayout implements OnTouchListener {
             SkbPool skbPool = SkbPool.getInstance();
             SoftKeyboard skb = skbPool.getSoftKeyboard(popupResId, popupResId,
                     miniSkbWidth, miniSkbHeight, mContext);
-            if (null == skb) return;
+            if (null == skb) {
+                return;
+            }
 
             mPopupX = (skbContainerWidth - skb.getSkbTotalWidth()) / 2;
             mPopupY = (skbContainerHeight - skb.getSkbTotalHeight()) / 2;
 
             if (null == mPopupSkbView) {
                 mPopupSkbView = new SoftKeyboardView(mContext, null);
-                mPopupSkbView.onMeasure(LayoutParams.WRAP_CONTENT,
+                mPopupSkbView.measure(LayoutParams.WRAP_CONTENT,
                         LayoutParams.WRAP_CONTENT);
             }
             mPopupSkbView.setOnTouchListener(this);
@@ -396,7 +411,9 @@ public class SkbContainer extends RelativeLayout implements OnTouchListener {
 
     public boolean handleBack(boolean realAction) {
         if (mPopupSkbShow) {
-            if (!realAction) return true;
+            if (!realAction) {
+                return true;
+            }
 
             dismissPopupSkb();
             mDiscardEvent = true;
@@ -542,6 +559,7 @@ public class SkbContainer extends RelativeLayout implements OnTouchListener {
 
     // Function for interface OnTouchListener, it is used to handle touch events
     // which will be delivered to the popup soft keyboard view.
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         // Translate the event to fit to the container.
         MotionEvent newEv = MotionEvent.obtain(event.getDownTime(), event

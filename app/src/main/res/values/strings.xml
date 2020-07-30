@@ -44,6 +44,7 @@
     <string name="setting_prediction_key">setting_prediction_key</string>
     <string name="setting_switch_key">setting_switch_key</string>
     <string name="setting_advanced_key">setting_advanced_key</string>
+    <string name="setting_keyboard_use">setting_keyboard_use</string>
 
 	<string name="setting">谷歌拼音输入法设置</string>
     <string name="setting_sound_key_title">按键声音</string>
@@ -51,6 +52,7 @@
     <string name="setting_prediction_title">联想输入</string>
     <string name="setting_switch_title">中英文切换</string>
     <string name="setting_switch_shift_space_title">Shift-space</string>
+    <string name="setting_use_keyboard_title">键盘选择</string>
 
     <string name="setting_enabled">开启</string>
     <string name="setting_disabled">关闭</string>
