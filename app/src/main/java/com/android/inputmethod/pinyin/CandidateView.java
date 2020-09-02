@@ -362,7 +362,7 @@ public class CandidateView extends View {
 
     private void onSizeChanged() {
         mContentWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
-        mContentHeight = (int) ((getMeasuredHeight() - getPaddingTop() - getPaddingBottom()) * 0.95f);
+        mContentHeight = (int) ((getMeasuredHeight() - getPaddingTop() - getPaddingBottom()) * 0.55f);
         /**
          * How to decide the font size if the height for display is given?
          * Now it is implemented in a stupid way.
@@ -382,8 +382,7 @@ public class CandidateView extends View {
             mCandidateTextSize = mImeCandidateTextSize;
             mCandidatesPaint.setTextSize(mCandidateTextSize);
             mFmiCandidates = mCandidatesPaint.getFontMetricsInt();
-            mSuspensionPointsWidth =
-                mCandidatesPaint.measureText(SUSPENSION_POINTS);
+            mSuspensionPointsWidth = mCandidatesPaint.measureText(SUSPENSION_POINTS);
         } else {
             // Reset the decoding information to update members for painting.
             setDecodingInfo(mDecInfo);

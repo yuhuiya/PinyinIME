@@ -24,51 +24,51 @@
   balloon="true">
 
   <row>
-    <key label=":)" icon="@drawable/emotion_icon_00"
+    <key label=":)" icon="@drawable/emotion_icon_00_popup"
       icon_popup="@drawable/emotion_icon_00_popup"/>
-    <key label=";)" icon="@drawable/emotion_icon_01"
+    <key label=";)" icon="@drawable/emotion_icon_01_popup"
       icon_popup="@drawable/emotion_icon_01_popup"/>
-    <key label=":P" icon="@drawable/emotion_icon_02"
+    <key label=":P" icon="@drawable/emotion_icon_02_popup"
       icon_popup="@drawable/emotion_icon_02_popup"/>
-    <key label=":D" icon="@drawable/emotion_icon_03"
+    <key label=":D" icon="@drawable/emotion_icon_03_popup"
       icon_popup="@drawable/emotion_icon_03_popup"/>
-    <key label="^_^" icon="@drawable/emotion_icon_04"
+    <key label="^_^" icon="@drawable/emotion_icon_04_popup"
       icon_popup="@drawable/emotion_icon_04_popup"/>
-    <key label="^O^" icon="@drawable/emotion_icon_05"
+    <key label="^O^" icon="@drawable/emotion_icon_05_popup"
       icon_popup="@drawable/emotion_icon_05_popup"/>
-    <key label=":-*" icon="@drawable/emotion_icon_06"
+    <key label=":-*" icon="@drawable/emotion_icon_06_popup"
       icon_popup="@drawable/emotion_icon_06_popup"/>
   </row>
 
   <row>
-    <key label=":(" icon="@drawable/emotion_icon_10"
+    <key label=":(" icon="@drawable/emotion_icon_10_popup"
       icon_popup="@drawable/emotion_icon_10_popup"/>
-    <key label=":'(" icon="@drawable/emotion_icon_11"
+    <key label=":'(" icon="@drawable/emotion_icon_11_popup"
       icon_popup="@drawable/emotion_icon_11_popup"/>
-    <key label=":S" icon="@drawable/emotion_icon_12"
+    <key label=":S" icon="@drawable/emotion_icon_12_popup"
       icon_popup="@drawable/emotion_icon_12_popup"/>
-    <key label=":O" icon="@drawable/emotion_icon_13"
+    <key label=":O" icon="@drawable/emotion_icon_13_popup"
       icon_popup="@drawable/emotion_icon_13_popup"/>
-    <key label="-_-" icon="@drawable/emotion_icon_14"
+    <key label="-_-" icon="@drawable/emotion_icon_14_popup"
       icon_popup="@drawable/emotion_icon_14_popup"/>
-    <key label="-_-z" icon="@drawable/emotion_icon_15"
+    <key label="-_-z" icon="@drawable/emotion_icon_15_popup"
       icon_popup="@drawable/emotion_icon_15_popup"/>
-    <key label="-_-||" icon="@drawable/emotion_icon_16"
+    <key label="-_-||" icon="@drawable/emotion_icon_16_popup"
       icon_popup="@drawable/emotion_icon_16_popup"/>
   </row>
 
   <row>
-    <key code="-6" key_type="3" icon="@drawable/smiley_icon"
+    <key code="-6" key_type="3" icon="@drawable/smiley_popup_icon"
       icon_popup="@drawable/smiley_popup_icon"/>
-    <key label="¬_¬" icon="@drawable/emotion_icon_20"
+    <key label="¬_¬" icon="@drawable/emotion_icon_20_popup"
       icon_popup="@drawable/emotion_icon_20_popup"/>
-    <key label="\@_\@" icon="@drawable/emotion_icon_21"
+    <key label="\@_\@" icon="@drawable/emotion_icon_21_popup"
       icon_popup="@drawable/emotion_icon_21_popup"/>
-    <key label="&gt;_&lt;" icon="@drawable/emotion_icon_22"
+    <key label="&gt;_&lt;" icon="@drawable/emotion_icon_22_popup"
       icon_popup="@drawable/emotion_icon_22_popup"/>
-    <key label="T_T" icon="@drawable/emotion_icon_23"
+    <key label="T_T" icon="@drawable/emotion_icon_23_popup"
       icon_popup="@drawable/emotion_icon_23_popup"/>
-    <key label="囧" icon="@drawable/emotion_icon_24"
+    <key label="囧" icon="@drawable/emotion_icon_24_popup"
       icon_popup="@drawable/emotion_icon_24_popup"/>
     <key id="3"/>
   </row>
@@ -77,7 +77,7 @@
     <key id="6"/>
     <key code="-3" key_type="2" label="\?123"/>
     <key code="62" key_type="5" width="30.608%p"/>
-    <key label="。" icon="@drawable/period_full_icon"
+    <key label="。" icon="@drawable/period_full_popup_icon"
       icon_popup="@drawable/period_full_popup_icon"/>
     <key id="1"/>
   </row>

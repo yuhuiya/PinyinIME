@@ -36,7 +36,7 @@
     <key label="—">
       <toggle_state state_id="@string/toggle_en_sym1" label="-"/>
     </key>
-    <key label="、" icon="@drawable/dun_icon"
+    <key label="、" icon="@drawable/dun_popup_icon"
       icon_popup="@drawable/dun_popup_icon">
       <toggle_state state_id="@string/toggle_en_sym1" label="/"/>
     </key>
@@ -75,12 +75,12 @@
     </key>
     <key code="-3" key_type="3" label="\?123"/>
     <key code="62" key_type="5" width="30.608%p"/>
-    <key label="。" key_type="0" icon="@drawable/period_full_icon"
+    <key label="。" key_type="0" icon="@drawable/period_full_popup_icon"
       icon_popup="@drawable/period_full_popup_icon">
       <toggle_state state_id="@string/toggle_en_sym1" label="."
-        icon="@drawable/period_icon" icon_popup="@drawable/period_popup_icon"/>
+        icon="@drawable/period_popup_icon" icon_popup="@drawable/period_popup_icon"/>
       <toggle_state state_id="@string/toggle_en_upper" label="."
-        icon="@drawable/period_icon" icon_popup="@drawable/period_popup_icon"/>
+        icon="@drawable/period_popup_icon" icon_popup="@drawable/period_popup_icon"/>
     </key>
     <key id="1"/>
   </row>

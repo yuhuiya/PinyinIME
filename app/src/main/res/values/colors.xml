@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <resources>
-    <color name="label_color">#ffffffff</color>
+    <color name="label_color">#ff000000</color>
     <color name="label_color_hl0">#ffffffff</color>
     <color name="balloon_color">#ff000000</color>
     <color name="candidate_color">#ff000000</color>
@@ -24,4 +24,5 @@
     <color name="composing_color">#ff000000</color>
     <color name="composing_color_hl">#ffffffff</color>
     <color name="composing_color_idle">#ff777777</color>
+    <color name="gray_fff3f3f3">#fff3f3f3</color>
 </resources>
