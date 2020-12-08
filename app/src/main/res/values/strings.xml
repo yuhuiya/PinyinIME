@@ -59,5 +59,6 @@
 
     <string name="setting_others">其它设置</string>
     <string name="setting_others_summary">词典同步等</string>
+    <string name="input_setting_error">无法打开系统输入法设置页面</string>
 
 </resources>
