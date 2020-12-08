@@ -17,6 +17,7 @@
 package com.android.inputmethod.pinyin;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +33,7 @@ import android.preference.PreferenceScreen;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -40,7 +42,7 @@ import java.util.List;
  */
 public class SettingsActivity extends PreferenceActivity implements
         Preference.OnPreferenceChangeListener {
-
+    public static final int REQUEST_SETTING = 1102;
     private static String TAG = "SettingsActivity";
 
     private CheckBoxPreference mKeySoundPref;
@@ -62,14 +64,14 @@ public class SettingsActivity extends PreferenceActivity implements
                 .findPreference(getString(R.string.setting_vibrate_key));
         mPredictionPref = (CheckBoxPreference) prefSet
                 .findPreference(getString(R.string.setting_prediction_key));
-        mKeyboardUsePref = (PreferenceScreen)prefSet.findPreference(getString(R.string.setting_keyboard_use));
+        mKeyboardUsePref = (PreferenceScreen) prefSet.findPreference(getString(R.string.setting_keyboard_use));
         prefSet.setOnPreferenceChangeListener(this);
-        
+
         Settings.getInstance(PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext()));
 
         updatePreference(prefSet, getString(R.string.setting_advanced_key));
-        
+
         updateWidgets();
         mKeyboardUsePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -109,14 +111,14 @@ public class SettingsActivity extends PreferenceActivity implements
         builder.setNegativeButton(android.R.string.cancel, null);
         CharSequence itemSettings = getString(R.string.ime_settings_activity_name);
         CharSequence itemInputMethod = getString(R.string.ime_name);
-        builder.setItems(new CharSequence[] {itemSettings, itemInputMethod},
+        builder.setItems(new CharSequence[]{itemSettings, itemInputMethod},
                 new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface di, int position) {
                         di.dismiss();
                         switch (position) {
                             case 0:
-                                launchSettings();
+                                launchIMESettings();
                                 break;
                             case 1:
                                 InputMethodManager inputMethodMgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -135,11 +137,22 @@ public class SettingsActivity extends PreferenceActivity implements
         mOptionsDialog.show();
     }
 
-    private void launchSettings() {
-        Intent intent = new Intent();
-        intent.setClass(this, SettingsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+    private void launchIMESettings() {
+        Intent intent = new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        try {
+            startActivityForResult(intent, REQUEST_SETTING);
+        } catch (Exception e) {
+            try {
+                Intent intent2 = new Intent();
+                intent2.setAction(Intent.ACTION_MAIN);
+                ComponentName com = new ComponentName("com.android.settings", "com.android.settings.Settings$AvailableVirtualKeyboardActivity");
+                intent2.setComponent(com);
+                startActivityForResult(intent2, REQUEST_SETTING);
+            } catch (Exception e2) {
+                Toast.makeText(this, getString(R.string.input_setting_error), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
