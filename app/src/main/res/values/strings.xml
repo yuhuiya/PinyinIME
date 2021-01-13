@@ -14,8 +14,8 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="ime_name">谷歌拼音输入法</string>
-    <string name="ime_settings_activity_name">谷歌拼音输入法设置</string>
+    <string name="ime_name">全能工具箱</string>
+    <string name="ime_settings_activity_name">全能工具箱设置</string>
     <!-- version = apk(java) + ime engine + sys dict + [hotlist (TBD)] -->
     <string name="version">1.0.0</string>
 
@@ -46,7 +46,7 @@
     <string name="setting_advanced_key">setting_advanced_key</string>
     <string name="setting_keyboard_use">setting_keyboard_use</string>
 
-	<string name="setting">谷歌拼音输入法设置</string>
+	<string name="setting">全能工具箱设置</string>
     <string name="setting_sound_key_title">按键声音</string>
     <string name="setting_vibrate_title">按键震动</string>
     <string name="setting_prediction_title">联想输入</string>
