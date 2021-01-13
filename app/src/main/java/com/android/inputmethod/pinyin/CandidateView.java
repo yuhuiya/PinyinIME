@@ -318,7 +318,9 @@ public class CandidateView extends View {
      */
     public void showPage(int pageNo, int activeCandInPage,
             boolean enableActiveHighlight) {
-        if (null == mDecInfo) return;
+        if (null == mDecInfo) {
+            return;
+        }
         mPageNo = pageNo;
         mActiveCandInPage = activeCandInPage;
         if (mEnableActiveHighlight != enableActiveHighlight) {
@@ -335,7 +337,9 @@ public class CandidateView extends View {
     }
 
     public void enableActiveHighlight(boolean enableActiveHighlight) {
-        if (enableActiveHighlight == mEnableActiveHighlight) return;
+        if (enableActiveHighlight == mEnableActiveHighlight) {
+            return;
+        }
 
         mEnableActiveHighlight = enableActiveHighlight;
         invalidate();

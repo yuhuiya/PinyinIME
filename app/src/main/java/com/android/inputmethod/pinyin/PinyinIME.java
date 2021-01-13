@@ -1023,12 +1023,13 @@ public class PinyinIME extends InputMethodService {
     private void showCandidateWindow(boolean showComposingView) {
         if (mEnvironment.needDebug()) {
             Log.d(TAG, "Candidates window is shown. Parent = "
-                    + mCandidatesContainer);
+                    + mCandidatesContainer + "showComposingView is" + showComposingView);
         }
-
         setCandidatesViewShown(true);
 
-        if (null != mSkbContainer) mSkbContainer.requestLayout();
+        if (null != mSkbContainer) {
+            mSkbContainer.requestLayout();
+        }
 
         if (null == mCandidatesContainer) {
             resetToIdleState(false);
@@ -1038,6 +1039,7 @@ public class PinyinIME extends InputMethodService {
         updateComposingText(showComposingView);
         mCandidatesContainer.showCandidates(mDecInfo,
                 ImeState.STATE_COMPOSING != mImeState);
+        mCandidatesContainer.showToolBar(!showComposingView);
         mFloatingWindowTimer.postShowFloatingWindow();
     }
 
@@ -1052,7 +1054,7 @@ public class PinyinIME extends InputMethodService {
         } catch (Exception e) {
             Log.e(TAG, "Fail to show the PopupWindow.");
         }
-        setCandidatesViewShown(false);
+        setCandidatesViewShown(true);
 
         if (null != mSkbContainer && mSkbContainer.isShown()) {
             mSkbContainer.toggleCandidateMode(false);
@@ -1127,7 +1129,7 @@ public class PinyinIME extends InputMethodService {
         updateIcon(mInputModeSwitcher.requestInputWithSkb(editorInfo));
         resetToIdleState(false);
         mSkbContainer.updateInputMode();
-        setCandidatesViewShown(false);
+        setCandidatesViewShown(true);
     }
 
     @Override

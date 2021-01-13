@@ -44,7 +44,7 @@
             </service>
 
             <activity android:name=".SettingsActivity"
-                android:label="@string/ime_settings_activity_name">
+                android:label="@string/ime_name">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN"/>
                     <category android:name="android.intent.category.LAUNCHER" />

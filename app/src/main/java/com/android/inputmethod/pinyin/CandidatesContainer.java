@@ -30,6 +30,8 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
 
@@ -69,7 +71,14 @@ public class CandidatesContainer extends RelativeLayout implements
      * between them.
      */
     private CandidateViewListener mCvListener;
-
+    /**
+     * 工具栏
+     */
+    private LinearLayout toolBarLayout;
+    /**
+     * 抢红包
+     */
+    private ImageView btnRedBag;
     /**
      * The left arrow button used to show previous page.
      */
@@ -169,9 +178,11 @@ public class CandidatesContainer extends RelativeLayout implements
     }
 
     public void initialize(CandidateViewListener cvListener,
-            BalloonHint balloonHint, GestureDetector gestureDetector) {
+                           BalloonHint balloonHint, GestureDetector gestureDetector) {
         mCvListener = cvListener;
 
+        toolBarLayout = (LinearLayout) findViewById(R.id.toolBar);
+        btnRedBag = (ImageView) findViewById(R.id.redBag);
         mLeftArrowBtn = (ImageButton) findViewById(R.id.arrow_left_btn);
         mRightArrowBtn = (ImageButton) findViewById(R.id.arrow_right_btn);
         mLeftArrowBtn.setOnTouchListener(this);
@@ -179,7 +190,7 @@ public class CandidatesContainer extends RelativeLayout implements
 
         mFlipper = (ViewFlipper) findViewById(R.id.candidate_flipper);
         mFlipper.setMeasureAllChildren(true);
-
+        showToolBar(true);
         invalidate();
         requestLayout();
 
@@ -187,11 +198,33 @@ public class CandidatesContainer extends RelativeLayout implements
             CandidateView cv = (CandidateView) mFlipper.getChildAt(i);
             cv.initialize(this, balloonHint, gestureDetector, mCvListener);
         }
+
+    }
+
+    /**
+     * 展示工具栏
+     */
+    public void showToolBar(Boolean isShow) {
+        if (isShow) {
+            toolBarLayout.setVisibility(View.VISIBLE);
+            mLeftArrowBtn.setVisibility(View.GONE);
+            mRightArrowBtn.setVisibility(View.GONE);
+            mFlipper.setVisibility(View.GONE);
+        } else {
+            toolBarLayout.setVisibility(View.GONE);
+            mLeftArrowBtn.setVisibility(View.VISIBLE);
+            mRightArrowBtn.setVisibility(View.VISIBLE);
+            mFlipper.setVisibility(View.VISIBLE);
+        }
+
     }
 
     public void showCandidates(PinyinIME.DecodingInfo decInfo,
-            boolean enableActiveHighlight) {
-        if (null == decInfo) return;
+                               boolean enableActiveHighlight) {
+
+        if (null == decInfo) {
+            return;
+        }
         mDecInfo = decInfo;
         mCurrentPage = 0;
 
@@ -274,7 +307,7 @@ public class CandidatesContainer extends RelativeLayout implements
     }
 
     public boolean pageBackward(boolean animLeftRight,
-            boolean enableActiveHighlight) {
+                                boolean enableActiveHighlight) {
         if (null == mDecInfo) return false;
 
         if (mFlipper.isFlipping() || 0 == mCurrentPage) return false;
@@ -299,7 +332,7 @@ public class CandidatesContainer extends RelativeLayout implements
     }
 
     public boolean pageForward(boolean animLeftRight,
-            boolean enableActiveHighlight) {
+                               boolean enableActiveHighlight) {
         if (null == mDecInfo) return false;
 
         if (mFlipper.isFlipping() || !mDecInfo.preparePage(mCurrentPage + 1)) {
@@ -330,8 +363,11 @@ public class CandidatesContainer extends RelativeLayout implements
         return cv.getActiveCandiatePosGlobal();
     }
 
+    @Override
     public void updateArrowStatus() {
-        if (mCurrentPage < 0) return;
+        if (mCurrentPage < 0) {
+            return;
+        }
         boolean forwardEnabled = mDecInfo.pageForwardable(mCurrentPage);
         boolean backwardEnabled = mDecInfo.pageBackwardable(mCurrentPage);
 
@@ -349,19 +385,22 @@ public class CandidatesContainer extends RelativeLayout implements
 
     private void enableArrow(ImageButton arrowBtn, boolean enabled) {
         arrowBtn.setEnabled(enabled);
-        if (enabled)
+        if (enabled) {
             arrowBtn.setAlpha(ARROW_ALPHA_ENABLED);
-        else
+        } else {
             arrowBtn.setAlpha(ARROW_ALPHA_DISABLED);
+        }
     }
 
     private void showArrow(ImageButton arrowBtn, boolean show) {
-        if (show)
+        if (show) {
             arrowBtn.setVisibility(View.VISIBLE);
-        else
+        } else {
             arrowBtn.setVisibility(View.INVISIBLE);
+        }
     }
 
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (v == mLeftArrowBtn) {
@@ -438,7 +477,7 @@ public class CandidatesContainer extends RelativeLayout implements
     }
 
     private Animation createAnimation(float xFrom, float xTo, float yFrom,
-            float yTo, float alphaFrom, float alphaTo, long duration) {
+                                      float yTo, float alphaFrom, float alphaTo, long duration) {
         AnimationSet animSet = new AnimationSet(getContext(), null);
         Animation trans = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
                 xFrom, Animation.RELATIVE_TO_SELF, xTo,
@@ -459,6 +498,7 @@ public class CandidatesContainer extends RelativeLayout implements
         mFlipper.stopFlipping();
     }
 
+    @Override
     public void onAnimationEnd(Animation animation) {
         if (!mLeftArrowBtn.isPressed() && !mRightArrowBtn.isPressed()) {
             CandidateView cv = (CandidateView) mFlipper.getCurrentView();
@@ -466,9 +506,11 @@ public class CandidatesContainer extends RelativeLayout implements
         }
     }
 
+    @Override
     public void onAnimationRepeat(Animation animation) {
     }
 
+    @Override
     public void onAnimationStart(Animation animation) {
     }
 }
