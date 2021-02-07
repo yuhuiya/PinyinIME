@@ -1264,6 +1264,7 @@ public class PinyinIME extends InputMethodService {
             removeCallbacks(this);
         }
 
+        @Override
         public void run() {
             mCandidatesContainer.getLocationInWindow(mParentLocation);
 
@@ -1293,12 +1294,14 @@ public class PinyinIME extends InputMethodService {
             mIme = ime;
         }
 
+        @Override
         public void onClickChoice(int choiceId) {
             if (choiceId >= 0) {
                 mIme.onChoiceTouched(choiceId);
             }
         }
 
+        @Override
         public void onToLeftGesture() {
             if (ImeState.STATE_COMPOSING == mImeState) {
                 changeToStateInput(true);
@@ -1306,6 +1309,7 @@ public class PinyinIME extends InputMethodService {
             mCandidatesContainer.pageForward(true, false);
         }
 
+        @Override
         public void onToRightGesture() {
             if (ImeState.STATE_COMPOSING == mImeState) {
                 changeToStateInput(true);
@@ -1313,9 +1317,11 @@ public class PinyinIME extends InputMethodService {
             mCandidatesContainer.pageBackward(true, false);
         }
 
+        @Override
         public void onToTopGesture() {
         }
 
+        @Override
         public void onToBottomGesture() {
         }
     }
