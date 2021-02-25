@@ -47,6 +47,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.android.inputmethod.pinyin.fragments.KeyBoardFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -1241,7 +1243,7 @@ public class PinyinIME extends InputMethodService {
 
     private void launchSettings() {
         Intent intent = new Intent();
-        intent.setClass(PinyinIME.this, SettingsActivity.class);
+        intent.setClass(PinyinIME.this, KeyBoardFragment.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

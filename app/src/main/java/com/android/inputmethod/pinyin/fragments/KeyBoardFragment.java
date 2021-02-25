@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.inputmethod.pinyin;
+package com.android.inputmethod.pinyin.fragments;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -26,7 +26,7 @@ import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
@@ -35,12 +35,15 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.android.inputmethod.pinyin.R;
+import com.android.inputmethod.pinyin.Settings;
+
 import java.util.List;
 
 /**
  * Setting activity of Pinyin IME.
  */
-public class SettingsActivity extends PreferenceActivity implements
+public class KeyBoardFragment extends PreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     public static final int REQUEST_SETTING = 1102;
     private static String TAG = "SettingsActivity";
@@ -52,7 +55,7 @@ public class SettingsActivity extends PreferenceActivity implements
     private AlertDialog mOptionsDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
 
@@ -68,7 +71,7 @@ public class SettingsActivity extends PreferenceActivity implements
         prefSet.setOnPreferenceChangeListener(this);
 
         Settings.getInstance(PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext()));
+                .getDefaultSharedPreferences(getActivity().getApplicationContext()));
 
         updatePreference(prefSet, getString(R.string.setting_advanced_key));
 
@@ -83,19 +86,19 @@ public class SettingsActivity extends PreferenceActivity implements
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         updateWidgets();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         Settings.releaseInstance();
         super.onDestroy();
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         Settings.setKeySound(mKeySoundPref.isChecked());
         Settings.setVibrate(mVibratePref.isChecked());
@@ -105,7 +108,7 @@ public class SettingsActivity extends PreferenceActivity implements
     }
 
     public void showOptionsMenu() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setCancelable(true);
         builder.setIcon(R.drawable.app_icon);
         builder.setNegativeButton(android.R.string.cancel, null);
@@ -114,6 +117,7 @@ public class SettingsActivity extends PreferenceActivity implements
         builder.setItems(new CharSequence[]{itemSettings, itemInputMethod},
                 new DialogInterface.OnClickListener() {
 
+                    @Override
                     public void onClick(DialogInterface di, int position) {
                         di.dismiss();
                         switch (position) {
@@ -121,7 +125,7 @@ public class SettingsActivity extends PreferenceActivity implements
                                 launchIMESettings();
                                 break;
                             case 1:
-                                InputMethodManager inputMethodMgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                InputMethodManager inputMethodMgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                                 inputMethodMgr.showInputMethodPicker();
                                 break;
                         }
@@ -150,7 +154,7 @@ public class SettingsActivity extends PreferenceActivity implements
                 intent2.setComponent(com);
                 startActivityForResult(intent2, REQUEST_SETTING);
             } catch (Exception e2) {
-                Toast.makeText(this, getString(R.string.input_setting_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.input_setting_error), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -173,7 +177,7 @@ public class SettingsActivity extends PreferenceActivity implements
         }
         Intent intent = preference.getIntent();
         if (intent != null) {
-            PackageManager pm = getPackageManager();
+            PackageManager pm = getActivity().getPackageManager();
             List<ResolveInfo> list = pm.queryIntentActivities(intent, 0);
             int listSize = list.size();
             if (listSize == 0) {
