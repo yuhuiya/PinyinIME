@@ -12,7 +12,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<Preference xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/setting">
 
     <CheckBoxPreference
@@ -55,4 +55,4 @@
         android:summary="@string/setting_use_keyboard_title"
         android:title="@string/setting_use_keyboard_title"/>
 
-</PreferenceScreen>
+</Preference>

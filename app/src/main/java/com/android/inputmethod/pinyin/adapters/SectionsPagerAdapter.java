@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.android.inputmethod.pinyin.R;
 import com.android.inputmethod.pinyin.fragments.HongBaoFragment;
+import com.android.inputmethod.pinyin.fragments.KeyBoardFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -33,7 +34,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         if(position == 0){
             return new HongBaoFragment();
         }else {
-            return new HongBaoFragment();
+            return (Fragment)(new KeyBoardFragment());
+
         }
     }
 

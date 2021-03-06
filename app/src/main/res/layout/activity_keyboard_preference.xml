@@ -19,7 +19,7 @@
             android:layout_toRightOf="@+id/preference_back"
             android:elegantTextHeight="false"
             android:gravity="left|center_vertical|center_horizontal"
-            android:text="@string/preference"
+            android:text="@string/keyboard_preference"
             android:textColor="#fff"
             android:textSize="18sp" />
 
@@ -35,18 +35,6 @@
             android:padding="10dp"
             android:src="@mipmap/ic_back" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_alignBottom="@+id/settings_bar"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginRight="10dp"
-            android:clickable="true"
-            android:onClick="enterAccessibilityPage"
-            android:padding="8dp"
-            android:src="@mipmap/ic_refresh" />
     </RelativeLayout>
 
     <FrameLayout

@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <application
+        android:name=".ToolBoxApp"
         android:icon="@drawable/app_icon"
         android:label="@string/ime_name">
         <activity

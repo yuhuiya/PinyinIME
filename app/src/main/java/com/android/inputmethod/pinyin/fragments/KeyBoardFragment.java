@@ -30,10 +30,17 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.android.inputmethod.pinyin.R;
 import com.android.inputmethod.pinyin.Settings;
@@ -43,8 +50,7 @@ import java.util.List;
 /**
  * Setting activity of Pinyin IME.
  */
-public class KeyBoardFragment extends PreferenceFragment implements
-        Preference.OnPreferenceChangeListener {
+public class KeyBoardFragment extends Fragment {
     public static final int REQUEST_SETTING = 1102;
     private static String TAG = "SettingsActivity";
 
@@ -57,6 +63,7 @@ public class KeyBoardFragment extends PreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         addPreferencesFromResource(R.xml.settings);
 
         PreferenceScreen prefSet = getPreferenceScreen();
@@ -84,6 +91,12 @@ public class KeyBoardFragment extends PreferenceFragment implements
             }
         });
     }
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_keyboard, container, false);
+        return view;
+    }
+
 
     @Override
     public void onResume() {
